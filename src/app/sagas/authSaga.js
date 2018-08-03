@@ -13,18 +13,12 @@ function* signInWithProvider(authProvider) {
 
 function* signInWithEmail(email, password) {
   try {
-    const result = {
-      uid : 1,
-      user : {
-        email,
-        name : "niko"
-      }
-    }
-    yield put(signInFulfilled(result));
-
+    const authData = yield call([firebaseAuth, firebaseAuth.signInWithEmailAndPassword], email, password);
+    console.log(authData)
+    yield put(signInFulfilled(authData.user));
   } catch(e) {
-    yield put(signInFailed("Error signing in with email and password."))
     console.log(e)
+    yield put(signInFailed("Error signing in with email and password."))
   }
 }
 

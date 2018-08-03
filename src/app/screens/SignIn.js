@@ -47,7 +47,7 @@ class SignIn extends Component {
                   type='password'
                 />
 
-                <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail("lel", "yo")}>
+                <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail("n@na.com", "niko123")}>
                   Login
                 </Button>
               </Segment>
