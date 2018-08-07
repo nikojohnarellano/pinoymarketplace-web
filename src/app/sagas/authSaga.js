@@ -14,10 +14,8 @@ function* signInWithProvider(authProvider) {
 function* signInWithEmail(email, password) {
   try {
     const authData = yield call([firebaseAuth, firebaseAuth.signInWithEmailAndPassword], email, password);
-    console.log(authData)
     yield put(signInFulfilled(authData.user));
   } catch(e) {
-    console.log(e)
     yield put(signInFailed("Error signing in with email and password."))
   }
 }

@@ -5,11 +5,13 @@ import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui
 
 class SignIn extends Component {
 
-  state = {}
+  state = {
+    emailAddress : '',
+    password : ''
+  }
 
   static getDerivedStateFromProps (nextProps, prevState) {
-    console.log(nextProps);
-
+    console.log(nextProps)
     return null;
   }
 
@@ -38,16 +40,18 @@ class SignIn extends Component {
             </Header>
             <Form size='large'>
               <Segment stacked>
-                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' onChange={e => this.setState({ emailAddress : e.target.value })}/>
                 <Form.Input
                   fluid
                   icon='lock'
                   iconPosition='left'
                   placeholder='Password'
                   type='password'
+                  value={this.state.password}
+                  onChange={e => this.setState({ password : e.target.value })}
                 />
 
-                <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail("n@na.com", "niko123")}>
+                <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail(this.state.emailAddress, this.state.password)}>
                   Login
                 </Button>
               </Segment>
