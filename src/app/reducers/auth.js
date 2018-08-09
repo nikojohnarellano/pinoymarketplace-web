@@ -1,10 +1,11 @@
 import { Record } from 'immutable';
-import { SIGN_IN_FULFILLED, SIGN_OUT_FULFILLED } from '../constants';
+import { SIGN_IN_FULFILLED, SIGN_OUT_FULFILLED, SIGN_IN_FAILED, REGISTER_FAILED } from '../constants';
 
 export const AuthState = new Record({
   authenticated : false,
   uid : null,
-  user : null
+  user : null,
+  error : ''
 });
 
 export const authReducer = (state = new AuthState(), action) => {
@@ -24,6 +25,14 @@ export const authReducer = (state = new AuthState(), action) => {
         uid : null,
         user: null
       })
+    }
+    case SIGN_IN_FAILED : {
+      const { error } = action.payload;
+      return state.merge({ error });
+    }
+    case REGISTER_FAILED : {
+      const { error } = action.payload;
+      return state.merge({ error });
     }
     default: 
       return state;
