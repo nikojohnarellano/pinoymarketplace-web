@@ -50,14 +50,13 @@ class SignIn extends Component {
                   value={this.state.password}
                   onChange={e => this.setState({ password : e.target.value })}
                 />
-
                 <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail(this.state.emailAddress, this.state.password)}>
                   Login
                 </Button>
               </Segment>
             </Form>
             <Message>
-              New to us? <a href='#'>Sign Up</a>
+              New to us? <a href='/register'>Sign Up</a>
             </Message>
           </Grid.Column>
         </Grid>

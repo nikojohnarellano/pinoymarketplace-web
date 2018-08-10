@@ -24,9 +24,9 @@ function* signInWithEmail(email, password) {
 
 function* register(displayName, email, password) {
   try {
-    const authData = yield call([firebaseAuth, firebaseAuth.createUserAndRetrieveDataWithEmailAndPassword], email, password);
-    yield call([authData, authData.updateUserProfile], { displayName });
-    alert("register successful", authData.user)
+    const authData = yield call([firebaseAuth, firebaseAuth.createUserWithEmailAndPassword], email, password);
+    yield call([authData.user, authData.user.updateProfile], { displayName });
+
     // Once the user is sucecssfully registered, sign the user in
     yield put(signInFulfilled(authData.user));
   } catch(e) {
@@ -43,7 +43,7 @@ export function* registerFlow() {
   while(true) {
     let { payload } = yield take([REGISTER_USER]);
 
-    yield fork(register, displayName, email, password);
+    yield fork(register, payload.displayName, payload.email, payload.password);
 
     yield take(SIGN_OUT);
     yield fork(signOut);
