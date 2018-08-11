@@ -17,8 +17,9 @@ import {
   Popup
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import SignIn from 'app/modules/auth/SignIn';
-import Register from 'app/modules/auth/Register';
+import { NameDropdown } from './auth/components/nameDropdown';
+import SignIn from 'app/modules/auth/signIn';
+import Register from 'app/modules/auth/register';
 
 /* eslint-disable react/no-multi-comp */
 /* Heads up! HomepageHeading uses inline styling, however it's not the best practice. Use CSS or styled components for
@@ -140,16 +141,16 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a'>Work</Menu.Item>
                 <Menu.Item as='a'>Company</Menu.Item>
                 <Menu.Item as='a'>Careers</Menu.Item>
-                <Menu.Item position='right'>
+                <Menu.Item disabled position='right' active={false}>
                   {
                     this.props.authenticated ?
-                      <Header as='h3' inverted>Hi {this.props.displayName}!</Header> :
+                      <NameDropdown dropdownDisplay={`Hi ${this.props.displayName}!`}/>:
                       <div>
                         <Popup
                           trigger={
                             <Button as='a' inverted={!fixed} inverted>
                               Sign Up
-                          </Button>
+                            </Button>
                           }
                           open={this.state.isRegisterPopupOpen}
                           onOpen={this.onOpenRegisterPopup}
@@ -266,10 +267,10 @@ class MobileContainer extends Component {
                   <Menu.Item onClick={this.handleToggle}>
                     <Icon name='sidebar' />
                   </Menu.Item>
-                  <Menu.Item position='right'>
+                  <Menu.Item position='right' fitted disabled>
                     {
                       this.props.authenticated ?
-                        <Header as='h3' inverted>Hi {this.props.displayName}!</Header> :
+                        <NameDropdown dropdownDisplay={`Hi ${this.props.displayName}!`}/> :
                         <div>
                           <Popup
                             trigger={
