@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter, Switch, Route, Redirect} from 'react-router-dom';
-import SignIn from 'app/screens/SignIn';
-import Register from 'app/screens/Register';
+import Home from 'app/modules/Home';
 
 export default class Routes extends Component {
   constructor(props) {
@@ -13,9 +12,8 @@ export default class Routes extends Component {
       <BrowserRouter>
         <div>
           <Switch>
-            <Route path="/signin" component={SignIn}/>
-            <Route path="/register" component={Register}/>
-            <Redirect to="/signin" />
+            <Route path="/" component={Home} />
+            <Redirect to="/" />
           </Switch>
         </div>
       </BrowserRouter>
