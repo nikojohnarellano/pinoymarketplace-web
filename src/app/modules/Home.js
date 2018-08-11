@@ -15,7 +15,8 @@ import {
   Sidebar,
   Visibility,
   Popup
-} from 'semantic-ui-react'
+} from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import SignIn from 'app/modules/auth/SignIn';
 import Register from 'app/modules/auth/Register';
 
@@ -57,14 +58,23 @@ HomepageHeading.propTypes = {
   mobile: PropTypes.bool,
 }
 
+const mapStateToProps = state => {
+  const { auth } = state;
+
+  return {
+    authenticated: auth,
+    displayName: auth.user.displayName
+  }
+}
+
 /* Heads up!
  * Neither Semantic UI nor Semantic UI React offer a responsive navbar, however, it can be implemented easily.
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = { 
-    isLoginPopupOpen : false, 
-    isRegisterPopupOpen : false 
+  state = {
+    isLoginPopupOpen: false,
+    isRegisterPopupOpen: false
   }
 
   hideFixedMenu = () => {
@@ -76,27 +86,27 @@ class DesktopContainer extends Component {
   }
 
   onOpenRegisterPopup = () => {
-    this.setState({ isRegisterPopupOpen : true })
+    this.setState({ isRegisterPopupOpen: true })
 
     if (this.state.isLoginPopupOpen) {
-      this.setState({ isLoginPopupOpen : false })
+      this.setState({ isLoginPopupOpen: false })
     }
   }
 
   onOpenLoginPopup = () => {
-    this.setState({ isLoginPopupOpen : true });
+    this.setState({ isLoginPopupOpen: true });
 
     if (this.state.isRegisterPopupOpen) {
-      this.setState({ isRegisterPopupOpen : false })
+      this.setState({ isRegisterPopupOpen: false })
     }
   }
 
   onCloseLoginPopup = () => {
-    this.setState({ isLoginPopupOpen : false })
+    this.setState({ isLoginPopupOpen: false })
   }
 
   onCloseRegisterPopup = () => {
-    this.setState({ isRegisterPopupOpen : false })
+    this.setState({ isRegisterPopupOpen: false })
   }
 
   render() {
@@ -131,42 +141,47 @@ class DesktopContainer extends Component {
                 <Menu.Item as='a'>Company</Menu.Item>
                 <Menu.Item as='a'>Careers</Menu.Item>
                 <Menu.Item position='right'>
-                  <Popup
-                    trigger={
-                      <Button as='a' inverted>
-                        Sign Up
-                      </Button>
-                    }
-                    open={this.state.isRegisterPopupOpen}
-                    onOpen={this.onOpenRegisterPopup}
-                    onClose={this.onCloseRegisterPopup}
-                    wide='very'
-                    size='huge'
-                    content={<Register/>}
-                    on='focus'
-                    position='bottom right'
-                  />
-                  <Popup
-                    trigger={
-                      <Button as='a' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
-                        Log in
-                      </Button>
-                    }
-                    open={this.state.isLoginPopupOpen}
-                    onOpen={this.onOpenLoginPopup}
-                    onClose={this.onCloseLoginPopup}
-                    wide='very'
-                    content={<SignIn/>}
-                    on='focus'
-                    position='bottom right'
-                  />
+                  {
+                    this.props.authenticated ?
+                      <Header as='h3' inverted>Hi {this.props.displayName}!</Header> :
+                      <div>
+                        <Popup
+                          trigger={
+                            <Button as='a' inverted={!fixed} inverted>
+                              Sign Up
+                          </Button>
+                          }
+                          open={this.state.isRegisterPopupOpen}
+                          onOpen={this.onOpenRegisterPopup}
+                          onClose={this.onCloseRegisterPopup}
+                          wide='very'
+                          size='huge'
+                          content={<Register />}
+                          on='focus'
+                          position='bottom right'
+                        />
+                        <Popup
+                          trigger={
+                            <Button as='a' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                              Log in
+                            </Button>
+                          }
+                          open={this.state.isLoginPopupOpen}
+                          onOpen={this.onOpenLoginPopup}
+                          onClose={this.onCloseLoginPopup}
+                          wide='very'
+                          content={<SignIn />}
+                          on='focus'
+                          position='bottom right'
+                        />
+                      </div>
+                  }
                 </Menu.Item>
               </Container>
             </Menu>
             <HomepageHeading />
           </Segment>
         </Visibility>
-
         {children}
       </Responsive>
     )
@@ -177,10 +192,12 @@ DesktopContainer.propTypes = {
   children: PropTypes.node,
 }
 
+DesktopContainer = connect(mapStateToProps)(DesktopContainer);
+
 class MobileContainer extends Component {
-  state = { 
-    isLoginPopupOpen : false, 
-    isRegisterPopupOpen : false 
+  state = {
+    isLoginPopupOpen: false,
+    isRegisterPopupOpen: false
   }
 
   handlePusherClick = () => {
@@ -190,27 +207,27 @@ class MobileContainer extends Component {
   }
 
   onOpenRegisterPopup = () => {
-    this.setState({ isRegisterPopupOpen : true })
+    this.setState({ isRegisterPopupOpen: true })
 
     if (this.state.isLoginPopupOpen) {
-      this.setState({ isLoginPopupOpen : false })
+      this.setState({ isLoginPopupOpen: false })
     }
   }
 
   onOpenLoginPopup = () => {
-    this.setState({ isLoginPopupOpen : true });
+    this.setState({ isLoginPopupOpen: true });
 
     if (this.state.isRegisterPopupOpen) {
-      this.setState({ isRegisterPopupOpen : false })
+      this.setState({ isRegisterPopupOpen: false })
     }
   }
 
   onCloseLoginPopup = () => {
-    this.setState({ isLoginPopupOpen : false })
+    this.setState({ isLoginPopupOpen: false })
   }
 
   onCloseRegisterPopup = () => {
-    this.setState({ isRegisterPopupOpen : false })
+    this.setState({ isRegisterPopupOpen: false })
   }
 
   handleToggle = () => this.setState({ sidebarOpened: !this.state.sidebarOpened })
@@ -250,36 +267,41 @@ class MobileContainer extends Component {
                     <Icon name='sidebar' />
                   </Menu.Item>
                   <Menu.Item position='right'>
-                    <Popup
-                      trigger={
-                        <Button as='a' inverted>
-                          Sign Up
-                        </Button>
-                      }
-                      open={this.state.isRegisterPopupOpen}
-                      onClose={this.onCloseRegisterPopup}
-                      onOpen={this.onOpenRegisterPopup}
-                      wide='very'
-                      size='huge'
-                      content={<Register/>}
-                      on='focus'
-                      position='bottom right'
-                    />
-                    <Popup
-                      trigger={
-                        <Button as='a' style={{ marginLeft: '0.5em' }}>
-                          Log in
-                        </Button>
-                      }
-                      wide='very'
-                      size='huge'
-                      open={this.state.isLoginPopupOpen}
-                      onClose={this.onCloseLoginPopup}
-                      onOpen={this.onOpenLoginPopup}
-                      content={<SignIn/>}
-                      on='focus'
-                      position='bottom right'
-                    />
+                    {
+                      this.props.authenticated ?
+                        <Header as='h3' inverted>Hi {this.props.displayName}!</Header> :
+                        <div>
+                          <Popup
+                            trigger={
+                              <Button as='a' inverted>
+                                Sign Up
+                              </Button>
+                            }
+                            open={this.state.isRegisterPopupOpen}
+                            onOpen={this.onOpenRegisterPopup}
+                            onClose={this.onCloseRegisterPopup}
+                            wide='very'
+                            size='huge'
+                            content={<Register />}
+                            on='focus'
+                            position='bottom right'
+                          />
+                          <Popup
+                            trigger={
+                              <Button as='a' style={{ marginLeft: '0.5em' }}>
+                                Log in
+                              </Button>
+                            }
+                            open={this.state.isLoginPopupOpen}
+                            onOpen={this.onOpenLoginPopup}
+                            onClose={this.onCloseLoginPopup}
+                            wide='very'
+                            content={<SignIn />}
+                            on='focus'
+                            position='bottom right'
+                          />
+                        </div>
+                    }
                   </Menu.Item>
                 </Menu>
               </Container>
@@ -298,6 +320,8 @@ MobileContainer.propTypes = {
   children: PropTypes.node,
 }
 
+MobileContainer = connect(mapStateToProps)(MobileContainer)
+
 const ResponsiveContainer = ({ children }) => (
   <div>
     <DesktopContainer>{children}</DesktopContainer>
@@ -312,8 +336,9 @@ ResponsiveContainer.propTypes = {
 const HomepageLayout = () => (
   <ResponsiveContainer>
     <Segment style={{ padding: '8em 0em' }} vertical>
-      
+
     </Segment>
   </ResponsiveContainer>
 )
-export default HomepageLayout
+
+export default HomepageLayout;
