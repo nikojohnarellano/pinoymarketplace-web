@@ -7,7 +7,8 @@ import {
   Responsive,
   Segment,
   Visibility,
-  Popup
+  Popup,
+  Input
 } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { NameDropdown } from 'app/modules/auth/components/nameDropdown';
@@ -77,25 +78,19 @@ class DesktopContainer extends Component {
           onBottomPassedReverse={this.hideFixedMenu}
         >
           <Segment
-            inverted
             textAlign='center'
             style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
             <Menu
               fixed={fixed ? 'top' : null}
-              inverted={!fixed}
-              pointing={!fixed}
-              secondary={!fixed}
+              borderless
               size='large'
             >
               <Container>
-                <Menu.Item as='a' active>
-                  Home
+                <Menu.Item>
+                  <Input className='icon' icon='search' placeholder='Search...' />
                 </Menu.Item>
-                <Menu.Item as='a'>Work</Menu.Item>
-                <Menu.Item as='a'>Company</Menu.Item>
-                <Menu.Item as='a'>Careers</Menu.Item>
                 <Menu.Item disabled position='right' active={false}>
                   {
                     this.props.authenticated ?
@@ -103,7 +98,7 @@ class DesktopContainer extends Component {
                       <div>
                         <Popup
                           trigger={
-                            <Button as='a' inverted={!fixed} inverted>
+                            <Button as='a'>
                               Sign Up
                             </Button>
                           }
@@ -118,7 +113,7 @@ class DesktopContainer extends Component {
                         />
                         <Popup
                           trigger={
-                            <Button as='a' inverted={!fixed} style={{ marginLeft: '0.5em' }}>
+                            <Button as='a' style={{ marginLeft: '0.5em' }}>
                               Log in
                             </Button>
                           }

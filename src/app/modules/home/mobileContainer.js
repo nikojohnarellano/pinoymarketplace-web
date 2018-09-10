@@ -60,7 +60,7 @@ class MobileContainer extends Component {
     return (
       <Responsive maxWidth={Responsive.onlyMobile.maxWidth}>
         <Sidebar.Pushable>
-          <Sidebar as={Menu} animation='uncover' inverted vertical visible={sidebarOpened}>
+          <Sidebar as={Menu} animation='uncover' vertical visible={sidebarOpened}>
             <Menu.Item as='a' active>
               Home
             </Menu.Item>
@@ -77,13 +77,12 @@ class MobileContainer extends Component {
             style={{ minHeight: '100vh' }}
           >
             <Segment
-              inverted
               textAlign='center'
               style={{ minHeight: 350, padding: '1em 0em' }}
               vertical
             >
               <Container>
-                <Menu inverted pointing secondary size='large'>
+                <Menu borderless size='large'>
                   <Menu.Item onClick={this.handleToggle}>
                     <Icon name='sidebar' />
                   </Menu.Item>
@@ -94,7 +93,7 @@ class MobileContainer extends Component {
                         <div>
                           <Popup
                             trigger={
-                              <Button as='a' inverted>
+                              <Button as='a'>
                                 Sign Up
                               </Button>
                             }
