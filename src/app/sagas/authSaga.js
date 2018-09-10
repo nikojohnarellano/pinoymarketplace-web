@@ -16,11 +16,13 @@ function* signInWithProvider(authProvider) {
 function* signInWithEmail(email, password) {
   try {
     const authData = yield call([firebaseAuth, firebaseAuth.signInWithEmailAndPassword], email, password);
-    alert("Sign in successful", authData.user.uid)
+
+    console.log(authData)
     yield put(signInFulfilled(authData.user));
   } catch(e) {
+    console.log(e)
+    console.log("sign in failed")
     yield put(signInFailed("Error signing in with email and password."))
-    alert("Sign in failed")
   }
 }
 
@@ -49,27 +51,19 @@ function* signOut() {
 export function* watchRegister() {
   while(true) {
     let { payload } = yield take([REGISTER_USER]);
-
     yield fork(register, payload.displayName, payload.email, payload.password);
-
-    yield take(SIGN_OUT);
-    yield fork(signOut);
   }
 }
 
 export function* watchSignIn() {
   while(true) {
-    let isAuthenticated = yield select(getAuthenticatedState);
+    let { payload } = yield take([SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER]);
 
-    if (isAuthenticated) {
-      let { payload } = yield take([SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER]);
-
-      if (payload.authProvider) {
-        yield fork(signInWithProvider, payload.authProvider);
-      } else {
-        const { email, password } = payload; 
-        yield fork(signInWithEmail, email, password);
-      }
+    if (payload.authProvider) {
+      yield fork(signInWithProvider, payload.authProvider);
+    } else {
+      const { email, password } = payload; 
+      yield fork(signInWithEmail, email, password);
     }
   }
 }

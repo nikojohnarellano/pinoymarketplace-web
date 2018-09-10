@@ -10,12 +10,8 @@ class SignIn extends Component {
     password : ''
   }
 
-  static getDerivedStateFromProps (nextProps, prevState) {
-    console.log(nextProps)
-    return null;
-  }
-
-  componentDidMount() {
+  _signIn = () => {
+    this.props.signInWithEmail(this.state.emailAddress, this.state.password);
   }
 
   render() {
@@ -26,7 +22,13 @@ class SignIn extends Component {
               Log-in to your account
             </Header>
             <Form size='large'>
-              <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' onChange={e => this.setState({ emailAddress : e.target.value })}/>
+              <Form.Input 
+                fluid 
+                icon='user' 
+                iconPosition='left' 
+                placeholder='E-mail address' 
+                onChange={e => this.setState({ emailAddress : e.target.value })}
+              />
               <Form.Input
                 fluid
                 icon='lock'
@@ -36,7 +38,11 @@ class SignIn extends Component {
                 value={this.state.password}
                 onChange={e => this.setState({ password : e.target.value })}
               />
-              <Button color='teal' fluid size='large' onClick={() => this.props.signInWithEmail(this.state.emailAddress, this.state.password)}>
+              <Button 
+                color='teal' 
+                fluid 
+                size='large' 
+                onClick={this._signIn}>
                 Login
               </Button>
             </Form>
