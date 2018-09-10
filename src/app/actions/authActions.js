@@ -1,5 +1,5 @@
 import firebase from 'firebase/app';
-import { SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER, SIGN_IN_FULFILLED, SIGN_IN_FAILED, REGISTER_FAILED, REGISTER_USER } from '../constants';
+import { SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER, SIGN_IN_FULFILLED, SIGN_IN_FAILED, REGISTER_FAILED, REGISTER_USER, SIGN_OUT_FULFILLED, SIGN_OUT_FAILED, SIGN_OUT } from '../constants';
 
 export const signInWithProvider = authProvider => {
   return {
@@ -65,3 +65,24 @@ export const registerFailed = error => {
     }
   }
 };
+
+export const signOut = () => {
+  return {
+    type : SIGN_OUT
+  }
+}
+
+export const signOutFulfilled = () => {
+  return {
+    type : SIGN_OUT_FULFILLED
+  }
+}
+
+export const signOutFailed = (error) => {
+  return {
+    type : SIGN_OUT_FAILED ,
+    payload : {
+      error
+    }
+  }
+}

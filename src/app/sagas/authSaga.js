@@ -1,7 +1,9 @@
-import { call, fork, put, take } from 'redux-saga/effects';
+import { call, fork, put, take, select } from 'redux-saga/effects';
 import { firebaseAuth } from '../firebase';
-import { signInFulfilled, signInFailed, registerFailed } from '../actions';
+import { getAuthenticatedState } from 'app/selectors';
+import { signInFulfilled, signInFailed, registerFailed, signOutFulfilled, signOutFailed } from '../actions';
 import { SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER, SIGN_OUT, REGISTER_USER } from '../constants';
+import signIn from '../modules/auth/signIn';
 
 function* signInWithProvider(authProvider) {
   try {
@@ -36,10 +38,15 @@ function* register(displayName, email, password) {
 }
 
 function* signOut() {
-
+  try { 
+    yield call([firebaseAuth, firebaseAuth.signOut]);
+    yield put(signOutFulfilled());
+  } catch(e) {
+    yield put(signOutFailed(e))
+  }
 }
 
-export function* registerFlow() {
+export function* watchRegister() {
   while(true) {
     let { payload } = yield take([REGISTER_USER]);
 
@@ -50,23 +57,32 @@ export function* registerFlow() {
   }
 }
 
-export function* loginFlow() {
+export function* watchSignIn() {
   while(true) {
-    let { payload } = yield take([SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER]);
+    let isAuthenticated = yield select(getAuthenticatedState);
 
-    if (payload.authProvider) {
-      yield fork(signInWithProvider, payload.authProvider);
-    } else {
-      const { email, password } = payload; 
-      yield fork(signInWithEmail, email, password);
+    if (isAuthenticated) {
+      let { payload } = yield take([SIGN_IN_WITH_EMAIL, SIGN_IN_WITH_PROVIDER]);
+
+      if (payload.authProvider) {
+        yield fork(signInWithProvider, payload.authProvider);
+      } else {
+        const { email, password } = payload; 
+        yield fork(signInWithEmail, email, password);
+      }
     }
+  }
+}
 
+export function* watchSignOut() {
+  while(true) {
     yield take(SIGN_OUT);
     yield fork(signOut);
   }
 }
 
 export const authSagas = [
-  fork(loginFlow),
-  fork(registerFlow)
+  fork(watchSignIn),
+  fork(watchRegister),
+  fork(watchSignOut)
 ]
