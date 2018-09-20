@@ -14,6 +14,7 @@ import { connect } from 'react-redux';
 import { NameDropdown } from 'app/modules/auth/components/nameDropdown';
 import SignIn from 'app/modules/auth/signIn';
 import Register from 'app/modules/auth/register';
+import styled from 'styled-components';
 
 class DesktopContainer extends Component {
   state = {
@@ -79,7 +80,6 @@ class DesktopContainer extends Component {
         >
           <Segment
             textAlign='center'
-            style={{ minHeight: 700, padding: '1em 0em' }}
             vertical
           >
             <Menu
@@ -89,7 +89,7 @@ class DesktopContainer extends Component {
             >
               <Container>
                 <Menu.Item>
-                  <Input className='icon' icon='search' placeholder='Search...' />
+                  <Input style={{ width : "350px"}} size='large' icon='search' placeholder='Search...' />
                 </Menu.Item>
                 <Menu.Item disabled position='right' active={false}>
                   {

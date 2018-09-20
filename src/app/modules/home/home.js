@@ -5,6 +5,13 @@ import {
 } from 'semantic-ui-react';
 import DesktopContainer from './desktopContainer';
 import MobileContainer from './mobileContainer';
+import MainRoutes from 'app/routes/mainRoutes';
+import styled from 'styled-components';
+
+const HomeContainer = styled(Segment)`
+  padding-right: 10px;
+  padding-left: 10px;
+`
 
 const ResponsiveContainer = ({ children }) => (
   <div>
@@ -19,9 +26,9 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <Segment style={{ padding: '8em 0em' }} vertical>
-
-    </Segment>
+    <HomeContainer className={'feed-container'} vertical>
+      <MainRoutes />
+    </HomeContainer>
   </ResponsiveContainer>
 )
 
