@@ -9,8 +9,8 @@ import MainRoutes from 'app/routes/mainRoutes';
 import styled from 'styled-components';
 
 const HomeContainer = styled(Segment)`
-  padding-right: 10px;
-  padding-left: 10px;
+  padding-right: 50px !important;
+  padding-left: 50px !important;
 `
 
 const ResponsiveContainer = ({ children }) => (
@@ -26,7 +26,7 @@ ResponsiveContainer.propTypes = {
 
 const HomepageLayout = () => (
   <ResponsiveContainer>
-    <HomeContainer className={'feed-container'} vertical>
+    <HomeContainer vertical>
       <MainRoutes />
     </HomeContainer>
   </ResponsiveContainer>

@@ -1,19 +1,61 @@
 import React, { Component } from 'react';
-import { Card } from 'semantic-ui-react'
+import { Card, Icon, Segment, Header } from 'semantic-ui-react'
+
+const extra = (
+  <a>
+    <Icon name='user' />
+    16 Friends
+  </a>
+)
 
 export default class Feed extends Component {
   render() {
     return (
-      <Card.Group itemsPerRow={4}>
-        <Card color='red' image={"https://via.placeholder.com/350x250"} />
-        <Card color='orange' image={"https://via.placeholder.com/350x250"} />
-        <Card color='yellow' image={"https://via.placeholder.com/350x250"} />
-        <Card color='olive' image={"https://via.placeholder.com/350x250"} />
-        <Card color='green' image={"https://via.placeholder.com/350x250"} />
-        <Card color='teal' image={"https://via.placeholder.com/350x250"} />
-        <Card color='blue' image={"https://via.placeholder.com/350x250"} />
-        <Card color='violet' image={"https://via.placeholder.com/350x250"} />
-      </Card.Group>
+      <Segment raised>
+        <Header as="h1">Featured</Header>
+        <Card.Group itemsPerRow={4}>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+          <Card image='https://via.placeholder.com/200x300'
+                header='Elliot Baker'
+                meta='Friend'
+                description='Elliot is a sound engineer living in Nashville who enjoys playing guitar and hanging with his cat.'
+                extra={extra}/>
+        </Card.Group>
+      </Segment>
     )
   }
 }
