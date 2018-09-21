@@ -16,6 +16,11 @@ import SignIn from 'app/modules/auth/signIn';
 import Register from 'app/modules/auth/register';
 import styled from 'styled-components';
 
+const StyledMenu = styled(Menu)`
+  padding-left: 30px;
+  padding-right: 30px;
+`
+
 class DesktopContainer extends Component {
   state = {
     isLoginPopupOpen: false,
@@ -82,12 +87,11 @@ class DesktopContainer extends Component {
             textAlign='center'
             vertical
           >
-            <Menu
+            <StyledMenu
               fixed={fixed ? 'top' : null}
               borderless
               size='large'
             >
-              <Container>
                 <Menu.Item>
                   <Input style={{ width : "350px"}} size='large' icon='search' placeholder='Search...' />
                 </Menu.Item>
@@ -128,8 +132,7 @@ class DesktopContainer extends Component {
                       </div>
                   }
                 </Menu.Item>
-              </Container>
-            </Menu>
+            </StyledMenu>
           </Segment>
         </Visibility>
         {children}
